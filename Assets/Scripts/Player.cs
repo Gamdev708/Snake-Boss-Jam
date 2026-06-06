@@ -14,11 +14,17 @@ public class Player : MonoBehaviour
     [SerializeField] float dashSpeed = 10f;
     [SerializeField] float dashDuration = 0.5f;
     [SerializeField] float dashDistance = 1f;
+    [SerializeField] float fallMultiplier = 2f;
+
+    [SerializeField] Transform groundCheck;
+    [SerializeField] float groundCheckRadius = 0.2f;
+    [SerializeField] LayerMask groundLayer;
 
     Rigidbody2D rb;
     CapsuleCollider2D capsuleCollider;
     Vector2 moveDirection;
     Vector2 jumpDirection;
+    bool isGrounded;
 
     private void OnEnable()
     {
@@ -27,9 +33,36 @@ public class Player : MonoBehaviour
         jumpAction.action.started += OnJump;
     }
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        capsuleCollider = GetComponent<CapsuleCollider2D>();
+    }
+
+    private void Update()
+    {
+        moveDirection.x = moveAction.action.ReadValue<Vector2>().x;
+        CheckIsGrounded();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rb.linearVelocity.y);
+        HandleBetterFall();
+    }
+
+    private void CheckIsGrounded()
+    {
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+    }
     private void OnJump(InputAction.CallbackContext context)
     {
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        if (isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
     }
 
     private void OnAttack(InputAction.CallbackContext context)
@@ -49,24 +82,17 @@ public class Player : MonoBehaviour
 
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    private void HandleBetterFall()
     {
-        rb = GetComponent<Rigidbody2D>();
-        capsuleCollider = GetComponent<CapsuleCollider2D>();
+        if (rb.linearVelocity.y < 0)
+        {
+            rb.linearVelocity += Vector2.up * Physics2D.gravity.y * fallMultiplier * Time.fixedDeltaTime;
+        }
+        else
+        {
+            rb.gravityScale = 1f; // Normal gravity when rising
+        }
     }
-
-    private void Update()
-    {
-        moveDirection.x = moveAction.action.ReadValue<Vector2>().x;
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, rb.linearVelocity.y);
-    }
-
     private void OnDisable()
     {
         dashAction.action.performed -= OnDash;
