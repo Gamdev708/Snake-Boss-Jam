@@ -1,14 +1,19 @@
 using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class Player : MonoBehaviour
 {
+    [Header("Input"), Space]
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference dashAction;
     [SerializeField] InputActionReference attackAction;
     [SerializeField] InputActionReference jumpAction;
 
+    [Header("Player Properties"), Space]
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float dashSpeed = 10f;
@@ -16,8 +21,9 @@ public class Player : MonoBehaviour
     [SerializeField] float dashDistance = 1f;
     [SerializeField] float fallMultiplier = 2f;
 
-    [SerializeField] Transform groundCheck;
-    [SerializeField] float groundCheckRadius = 0.2f;
+    [Header("Ground Check"), Space]
+    [SerializeField] Transform groundDetector;
+    [SerializeField] float groundCheckDistance = 0.2f;
     [SerializeField] LayerMask groundLayer;
 
     Rigidbody2D rb;
@@ -55,7 +61,16 @@ public class Player : MonoBehaviour
 
     private void CheckIsGrounded()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(groundDetector.position, Vector2.down, groundCheckDistance, groundLayer);
+        if (raycastHit2D.collider is TilemapCollider2D)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+        //isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
     }
     private void OnJump(InputAction.CallbackContext context)
     {
@@ -79,6 +94,20 @@ public class Player : MonoBehaviour
 
     private void OnDash(InputAction.CallbackContext context)
     {
+        Vector2 dashPosition = rb.position + moveDirection * dashSpeed;
+        rb.MovePosition(dashPosition);
+        //StartCoroutine(Dash());
+    }
+
+    private IEnumerator Dash()
+    {
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0;
+        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocityX = dashSpeed * moveDirection.x;
+        yield return new WaitForSeconds(dashDuration);
+
+        rb.gravityScale = originalGravity;
 
     }
 
@@ -99,4 +128,6 @@ public class Player : MonoBehaviour
         attackAction.action.started -= OnAttack;
         jumpAction.action.started -= OnJump;
     }
+
+
 }

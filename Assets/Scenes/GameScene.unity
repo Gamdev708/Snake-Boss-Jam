@@ -131,7 +131,7 @@ GameObject:
   - component: {fileID: 32757943}
   - component: {fileID: 32757942}
   - component: {fileID: 32757941}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3038,7 +3038,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1680467812}
   - component: {fileID: 1680467811}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3127,18 +3127,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.32
-      objectReference: {fileID: 0}
-    - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.018
       objectReference: {fileID: 0}
@@ -3178,17 +3166,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3254276359275704157, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+      propertyPath: dashSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3254276359275704157, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3254276359275704157, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 32757940}
+    - target: {fileID: 3254276359275704157, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+      propertyPath: dashDuration
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4949148827656938071, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: m_Name
       value: Player (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7626274112303348305, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
-      propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7626274112303348305, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
-      propertyPath: m_SortingLayerID
-      value: 1012271799
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
