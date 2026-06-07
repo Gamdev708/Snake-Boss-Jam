@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IAttacker
 {
     [Header("Input"), Space]
     [SerializeField] InputActionReference moveAction;
     [SerializeField] InputActionReference dashAction;
     [SerializeField] InputActionReference attackAction;
+    [SerializeField] InputActionReference shootAction;
     [SerializeField] InputActionReference jumpAction;
 
     [Header("Player Properties"), Space]
@@ -28,6 +29,8 @@ public class Player : MonoBehaviour
 
     Rigidbody2D rb;
     CapsuleCollider2D capsuleCollider;
+    Fighter fighter;
+    IAttacker boss;
     Vector2 moveDirection;
     Vector2 jumpDirection;
     bool isGrounded;
@@ -36,16 +39,22 @@ public class Player : MonoBehaviour
     {
         dashAction.action.performed += OnDash;
         attackAction.action.started += OnAttack;
+        shootAction.action.started += OnShoot;
         jumpAction.action.started += OnJump;
     }
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        fighter = GetComponent<Fighter>();
     }
-
+    void Start()
+    {
+        boss = GameObject.FindGameObjectWithTag("Boss").GetComponent<IAttacker>();
+    }
     private void Update()
     {
         moveDirection.x = moveAction.action.ReadValue<Vector2>().x;
@@ -89,7 +98,17 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("Attacking normally.");
+            fighter.MeleeAttack();
         }
+    }
+
+    private void OnShoot(InputAction.CallbackContext context)
+    {
+        Vector2 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 direction = (mouseWorldPosition - (Vector2)transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        fighter.RangedAttackManual(direction, angle);
     }
 
     private void OnDash(InputAction.CallbackContext context)
@@ -127,7 +146,15 @@ public class Player : MonoBehaviour
         dashAction.action.performed -= OnDash;
         attackAction.action.started -= OnAttack;
         jumpAction.action.started -= OnJump;
+        shootAction.action.started -= OnShoot;
     }
 
-
+    public Health GetHealth()
+    {
+        if (TryGetComponent(out Health health))
+        {
+            return health;
+        }
+        return null;
+    }
 }
