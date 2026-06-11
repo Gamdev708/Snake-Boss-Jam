@@ -19,7 +19,6 @@ public class Player : MonoBehaviour, IAttacker
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float dashSpeed = 10f;
     [SerializeField] float dashDuration = 0.5f;
-    [SerializeField] float dashDistance = 1f;
     [SerializeField] float fallMultiplier = 2f;
 
     [Header("Ground Check"), Space]
