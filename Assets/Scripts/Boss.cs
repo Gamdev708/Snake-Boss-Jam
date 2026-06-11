@@ -66,6 +66,7 @@ public class Boss : MonoBehaviour, IAttacker
     Health playerHealth;
     Health bossHealth;
     Rigidbody2D rb;
+    Fighter fighter; // For ranged attacks
     BossPhase currentPhase = BossPhase.Phase1;
     bool isAttacking = false;
 
@@ -79,7 +80,7 @@ public class Boss : MonoBehaviour, IAttacker
     bool isBodySpinOnCooldown = false;
     public Health GetHealth()
     {
-        if(TryGetComponent<Health>(out var health))
+        if (TryGetComponent<Health>(out var health))
         {
             return health;
         }
@@ -91,6 +92,7 @@ public class Boss : MonoBehaviour, IAttacker
     {
         bossHealth = GetComponent<Health>();
         rb = GetComponent<Rigidbody2D>();
+        fighter = GetComponent<Fighter>();
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
         bossHealth.onDie.AddListener(OnBossDie);
@@ -225,7 +227,7 @@ public class Boss : MonoBehaviour, IAttacker
             onBiteAttack.Invoke();
             StartCoroutine(BiteRoutine(biteDamage));
             isBiteOnCooldown = true;
-            StartCoroutine(CooldownRoutine(biteCooldown, () => isBiteOnCooldown = false)); 
+            StartCoroutine(CooldownRoutine(biteCooldown, () => isBiteOnCooldown = false));
         }
         else
         {
@@ -244,11 +246,11 @@ public class Boss : MonoBehaviour, IAttacker
         if (currentPhase == BossPhase.Phase1)
         {
             Debug.Log("Boss: Venom Spit!");
-            StartCoroutine(SingleVenomProjectile());
+            SingleVenomProjectile();
             onVenomAttack.Invoke();
 
             isVenomOnCooldown = true;
-            StartCoroutine(CooldownRoutine(venomCooldown, () => isVenomOnCooldown = false)); 
+            StartCoroutine(CooldownRoutine(venomCooldown, () => isVenomOnCooldown = false));
         }
         else
         {
@@ -348,11 +350,10 @@ public class Boss : MonoBehaviour, IAttacker
 
             // Deal damage if the player is at roughly the same height
             if (GetCellDistance() <= tailSwipeRangeCells)
-                playerHealth.TakeDamage(gameObject, slitherDamage);
+            { playerHealth.TakeDamage(gameObject, slitherDamage); }
 
             // Short pause between passes in Phase 2
-            if (i < repeatCount - 1)
-                yield return new WaitForSeconds(0.4f);
+            if (i < repeatCount - 1) { yield return new WaitForSeconds(0.4f); }
         }
 
         // Return home after all passes
@@ -360,28 +361,35 @@ public class Boss : MonoBehaviour, IAttacker
 
     }
 
-    private IEnumerator SingleVenomProjectile()
+    private void SingleVenomProjectile()
     {
-        Vector2 dir = ((Vector2)playerHealth.transform.position - (Vector2)mouthSpawnPoint.position).normalized;
-        GameObject proj = Instantiate(venomProjectilePrefab, mouthSpawnPoint.position, Quaternion.identity);
- 
-        yield return null;
+        Vector2 dir = ((Vector2)playerHealth.transform.position - rb.position).normalized;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+
+        // RangedAttack(direction, angle, target) — target is the player IAttacker
+        IAttacker playerAttacker = playerHealth.transform.GetComponent<IAttacker>();
+        if (playerAttacker != null)
+        {
+            fighter.RangedAttackHoming(dir, angle, playerAttacker);
+        }
+        else
+        {
+            fighter.RangedAttackManual(dir, angle);
+        }// fallback if player has no IAttacker
     }
 
     // Triple Venom — 3 directions (left, center, right)
     private IEnumerator TripleVenomRoutine()
     {
-        float[] angles = { -30f, 0f, 30f }; // Spread angles
 
-        foreach (float angle in angles)
+        if (playerHealth == null || playerHealth.IsDead()) { yield break; }
+        for (int i = 0; i < 3; i++)
         {
-            if (playerHealth == null || playerHealth.IsDead()) yield break;
-
-            // Apply damage per shot (you can replace with projectile spawn here)
-            playerHealth.TakeDamage(gameObject, tripleVenomDamage);
-            Debug.Log($"Triple Venom shot at angle {angle}");
-            yield return new WaitForSeconds(0.15f);
+            Debug.Log($"Triple Venom shot "); 
+            SingleVenomProjectile();
+            yield return new WaitForSeconds(0.5f); // Short delay between shots
         }
+        yield return new WaitForSeconds(0.15f);
     }
 
     private IEnumerator CooldownRoutine(float cooldown, System.Action onComplete)
