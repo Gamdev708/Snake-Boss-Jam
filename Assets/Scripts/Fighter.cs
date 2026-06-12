@@ -12,7 +12,6 @@ public class Fighter : MonoBehaviour
     [SerializeField] float rangedAttackCooldown = 0.5f; 
     [SerializeField] float homingAttackCooldown = 2f;
     [SerializeField] float meleeAttackCooldown = 0.3f;
-    [SerializeField] Transform projectileSpawnPoint;
     [SerializeField] Projectile projectilePrefab;
     [SerializeField] Projectile homingProjectilePrefab;
     [SerializeField] LayerMask enemyLayerMask;
@@ -90,8 +89,11 @@ public class Fighter : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         onComplete();
     }
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange);
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    if (attackPoint is not null)
+    //    {
+    //        Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange); 
+    //    }
+    //}
 }

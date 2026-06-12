@@ -40,8 +40,6 @@ public class Boss : MonoBehaviour, IAttacker
 
     [Header("Attack Range Settings"), Space]
     [SerializeField] Tilemap tilemap;
-    [SerializeField] Transform mouthSpawnPoint;
-    [SerializeField] GameObject venomProjectilePrefab;
     [SerializeField] float venomProjectileSpeed = 5f;
 
     [Header("Attack Range Settings (in cells)"), Space]
