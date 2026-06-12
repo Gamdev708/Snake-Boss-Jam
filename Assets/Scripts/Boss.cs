@@ -303,8 +303,8 @@ public class Boss : MonoBehaviour, IAttacker
         yield return StartCoroutine(MoveToPosition(targetPos, lungeMoveSpeed));
 
         // Deal damage if still close enough
-        if (GetCellDistance() <= biteRangeCells + 1)
-            playerHealth.TakeDamage(gameObject, damage);
+        //if (GetCellDistance() <= biteRangeCells + 1)
+        //    playerHealth.TakeDamage(gameObject, damage);
 
         // Brief pause at the player — feels more impactful
         yield return new WaitForSeconds(0.1f);
@@ -325,7 +325,7 @@ public class Boss : MonoBehaviour, IAttacker
         for (int i = 0; i < multiBiteCount; i++)
         {
             if (playerHealth == null || playerHealth.IsDead()) yield break;
-            playerHealth.TakeDamage(gameObject, multiBiteDamage);
+            //playerHealth.TakeDamage(gameObject, multiBiteDamage);
             Debug.Log($"Multi Bite {i + 1}/{multiBiteCount}");
             yield return new WaitForSeconds(multiBiteDelay);
         }
@@ -413,6 +413,14 @@ public class Boss : MonoBehaviour, IAttacker
     //        return null;
     //     }
     //    
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") && isAttacking)
+        {
+            playerHealth.TakeDamage(gameObject, biteDamage);
+        }
+    }
 
 
 
