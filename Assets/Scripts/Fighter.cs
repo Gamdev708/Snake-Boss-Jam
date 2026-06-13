@@ -89,11 +89,16 @@ public class Fighter : MonoBehaviour
         yield return new WaitForSeconds(cooldown);
         onComplete();
     }
-    //private void OnDrawGizmos()
-    //{
-    //    if (attackPoint is not null)
-    //    {
-    //        Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange); 
-    //    }
-    //}
+
+    public Transform GetAttackPoint()
+    {
+        return attackPoint;
+    }
+    private void OnDrawGizmos()
+    {
+        if (attackPoint is not null)
+        {
+            Gizmos.DrawWireSphere(attackPoint.position, meleeAttackRange);
+        }
+    }
 }

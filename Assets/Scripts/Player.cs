@@ -34,6 +34,8 @@ public class Player : MonoBehaviour, IAttacker
     Vector2 jumpDirection;
     bool isGrounded;
 
+    bool isFacingRight = true;
+
     private void OnEnable()
     {
         dashAction.action.performed += OnDash;
@@ -58,6 +60,7 @@ public class Player : MonoBehaviour, IAttacker
     {
         moveDirection.x = moveAction.action.ReadValue<Vector2>().x;
         CheckIsGrounded();
+        HandleFlip();
     }
 
     // Update is called once per frame
@@ -127,6 +130,28 @@ public class Player : MonoBehaviour, IAttacker
 
         rb.gravityScale = originalGravity;
 
+    }
+
+    private void HandleFlip()
+    {
+        if (moveDirection.x > 0f && !isFacingRight)
+        {
+            Flip();
+        }
+        else if (moveDirection.x < 0f && isFacingRight)
+        {
+            Flip();
+        }
+    }
+
+    private void Flip()
+    {
+        isFacingRight = !isFacingRight;
+
+        // Flip the whole GameObject (sprite + children like attackPoint flip automatically)
+        Vector3 scale = transform.localScale;
+        scale.x *= -1f;
+        transform.localScale = scale;
     }
 
     private void HandleBetterFall()
