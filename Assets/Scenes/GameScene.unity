@@ -3852,6 +3852,38 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1624352564}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PhaseChange
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AudioManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6736150502749554808, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: onDie.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 6853593253365787334, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
       propertyPath: tilemap
       value: 
