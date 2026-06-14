@@ -20,10 +20,13 @@ public class Fighter : MonoBehaviour
     bool isRangedOnCooldown = false;
     bool isHomingOnCooldown = false;
 
+   
+
     public void MeleeAttack()
     {
         if (isMeleeOnCooldown) { return; }
         Collider2D overlapedCollider = Physics2D.OverlapCircle(attackPoint.position, meleeAttackRange, enemyLayerMask);
+        
         //DrawWireCapsule(transform.position, transform.position, 1f);
 
         if (overlapedCollider != null)

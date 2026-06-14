@@ -1283,6 +1283,11 @@ Transform:
   - {fileID: 1680467812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &653084662 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 400124223553339562, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+  m_PrefabInstance: {fileID: 2056375635}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &680242528
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,13 +1474,13 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.66, y: 0.78}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.5, y: 1}
   m_EdgeRadius: 0
 --- !u!1 &1373589832
 GameObject:
@@ -3605,11 +3610,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.773
+      value: -1.787
       objectReference: {fileID: 0}
     - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.538
+      value: -4.585
       objectReference: {fileID: 0}
     - target: {fileID: 1580361672232396788, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3644,9 +3649,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3254276359275704157, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 653084662}
+    - target: {fileID: 3254276359275704157, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: shootAction
       value: 
       objectReference: {fileID: 1781555164194001046, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    - target: {fileID: 3800638075007724412, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 4949148827656938071, guid: 73330cd420469dd4da2b69bf208acb7f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3693,12 +3706,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 1989829102}
     m_Modifications:
     - target: {fileID: 3128750655708623118, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128750655708623118, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128750655708623118, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.057
       objectReference: {fileID: 0}
     - target: {fileID: 3128750655708623118, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.92
+      value: -4.116
       objectReference: {fileID: 0}
     - target: {fileID: 3128750655708623118, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3735,6 +3756,22 @@ PrefabInstance:
     - target: {fileID: 5566527552765743883, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763979263779981542, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2355598337168177109, guid: c121d098697e7ee4d9c9fb80d8368c2d, type: 3}
+    - target: {fileID: 5763979263779981542, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763979263779981542, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5763979263779981542, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6853593253365787334, guid: b3f9d8163fcaa3b428ff80162dcded03, type: 3}
       propertyPath: tilemap

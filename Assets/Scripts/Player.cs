@@ -91,6 +91,8 @@ public class Player : MonoBehaviour, IAttacker
         }
     }
 
+    public Animator anim;
+    
     private void OnAttack(InputAction.CallbackContext context)
     {
         if (dashAction.action.IsPressed())
@@ -101,6 +103,7 @@ public class Player : MonoBehaviour, IAttacker
         {
             Debug.Log("Attacking normally.");
             fighter.MeleeAttack();
+            anim.SetBool("isAttacking", true);
         }
     }
 
