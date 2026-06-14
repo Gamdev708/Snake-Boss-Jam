@@ -68,7 +68,7 @@ public class Boss : MonoBehaviour, IAttacker
     BossPhase currentPhase = BossPhase.Phase1;
     bool isAttacking = false;
 
-    // Home position — set once at Start, always return here after attacks
+    // Home position ï¿½ set once at Start, always return here after attacks
     Vector2 returnPosition;
 
     // Cooldown flags
@@ -175,7 +175,7 @@ public class Boss : MonoBehaviour, IAttacker
         Vector3Int bossCell = tilemap.WorldToCell(transform.position);
         Vector3Int playerCell = tilemap.WorldToCell(playerHealth.transform.position);
 
-        // Chebyshev distance — accounts for both X and Y
+        // Chebyshev distance ï¿½ accounts for both X and Y
         return Mathf.Max(
             Mathf.Abs(playerCell.x - bossCell.x),
             Mathf.Abs(playerCell.y - bossCell.y)
@@ -201,6 +201,7 @@ public class Boss : MonoBehaviour, IAttacker
         if (currentPhase == BossPhase.Phase1 && bossHealth.GetFraction() <= phase2HealthThreshold)
         {
             EnterPhase2();
+            AudioManager.instance.PhaseChange(1);
         }
     }
 
@@ -291,7 +292,7 @@ public class Boss : MonoBehaviour, IAttacker
     // COROUTINES
     // -------------------------
 
-    // BITE — lunge toward player, deal damage on contact, return home
+    // BITE ï¿½ lunge toward player, deal damage on contact, return home
     private IEnumerator BiteRoutine(float damage)
     {
         isAttacking = true;
@@ -306,7 +307,7 @@ public class Boss : MonoBehaviour, IAttacker
         //if (GetCellDistance() <= biteRangeCells + 1)
         //    playerHealth.TakeDamage(gameObject, damage);
 
-        // Brief pause at the player — feels more impactful
+        // Brief pause at the player ï¿½ feels more impactful
         yield return new WaitForSeconds(0.1f);
 
         // --- RETURN HOME ---
@@ -315,7 +316,7 @@ public class Boss : MonoBehaviour, IAttacker
     }
 
 
-    // Multi Bite — rapid succession bites
+    // Multi Bite ï¿½ rapid succession bites
     private IEnumerator MultiBiteRoutine()
     {
         isAttacking = true;
@@ -333,7 +334,7 @@ public class Boss : MonoBehaviour, IAttacker
         yield return StartCoroutine(ReturnHome());
     }
 
-    // Slither — repeats in phase 2
+    // Slither ï¿½ repeats in phase 2
     private IEnumerator SlitherRoutine(int repeatCount)
     {
         isAttacking = true;
@@ -364,7 +365,7 @@ public class Boss : MonoBehaviour, IAttacker
         Vector2 dir = ((Vector2)playerHealth.transform.position - rb.position).normalized;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        // RangedAttack(direction, angle, target) — target is the player IAttacker
+        // RangedAttack(direction, angle, target) ï¿½ target is the player IAttacker
         IAttacker playerAttacker = playerHealth.transform.GetComponent<IAttacker>();
         if (playerAttacker != null)
         {
@@ -376,7 +377,7 @@ public class Boss : MonoBehaviour, IAttacker
         }// fallback if player has no IAttacker
     }
 
-    // Triple Venom — 3 directions (left, center, right)
+    // Triple Venom ï¿½ 3 directions (left, center, right)
     private IEnumerator TripleVenomRoutine()
     {
 
@@ -473,7 +474,7 @@ public class Boss : MonoBehaviour, IAttacker
         GUI.Label(new Rect(10, 60, 500, 30), $"Next Attack: {nextAtk}", style);
         GUI.Label(new Rect(10, 85, 500, 30), $"Is Attacking: {isAttacking}", style);
         GUI.Label(new Rect(10, 110, 500, 30),
-            $"Cooldowns — Bite:{isBiteOnCooldown} Venom:{isVenomOnCooldown} Slither:{isSlitherOnCooldown} Spin:{isBodySpinOnCooldown}",
+            $"Cooldowns ï¿½ Bite:{isBiteOnCooldown} Venom:{isVenomOnCooldown} Slither:{isSlitherOnCooldown} Spin:{isBodySpinOnCooldown}",
             style);
     }
 #endif
