@@ -1,0 +1,72 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
+
+public class AudioManager : MonoBehaviour
+{
+    private List<EventInstance> eventInstances;
+    private EventInstance musicEventInstance;
+    public static AudioManager instance {get; private set;}
+    void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.Log("More than one istance found");
+        }
+        instance = this;
+
+        eventInstances = new List<EventInstance>();
+    }
+
+    private void Start()
+    {
+        InitializeMusic(FMODEvents.instance.bossMusic);
+    }
+
+    public EventInstance CreateEventInstance(EventReference eventReference)
+        {
+            EventInstance eventInstance = RuntimeManager.CreateInstance(eventReference);
+            eventInstances.Add(eventInstance);
+            return eventInstance;
+        }
+
+    private void InitializeMusic(EventReference musicRef)
+        {
+            musicEventInstance = CreateEventInstance(musicRef);
+            musicEventInstance.setVolume(0.2f); // 20% volume
+            musicEventInstance.start();
+        }
+
+    public void UpdateEventInstanceParameter(EventInstance eventInstance, string parameterName, int value)
+        {
+            eventInstance.setParameterByName(parameterName, value);
+        }
+
+    //Test function of the one below it
+    public void PhaseTestChange(int value)
+        {
+            Debug.Log("Test!" + value);
+            UpdateEventInstanceParameter(musicEventInstance, "Boss_State", value);
+        }
+        //Changes the sections of the songs. value 1 = phase2 loop, value 2 = death stinger outro
+        public void PhaseChange(int value)
+        {
+            UpdateEventInstanceParameter(musicEventInstance, "Boss_State", value);
+        }
+
+    private void CleanUp()
+        {
+            foreach(EventInstance ei in eventInstances)
+            {
+                ei.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+                ei.release();
+            }
+        }
+
+    private void OnDestroy()
+        {
+            CleanUp();
+        }
+}
