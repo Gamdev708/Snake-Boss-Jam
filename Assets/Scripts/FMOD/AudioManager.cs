@@ -43,9 +43,15 @@ public class AudioManager : MonoBehaviour
             eventInstance.setParameterByName(parameterName, value);
         }
 
+    //Test function of the one below it
     public void PhaseTestChange(int value)
         {
             Debug.Log("Test!" + value);
+            UpdateEventInstanceParameter(musicEventInstance, "Boss_State", value);
+        }
+        //Changes the sections of the songs. value 1 = phase2 loop, value 2 = death stinger outro
+        public void PhaseChange(int value)
+        {
             UpdateEventInstanceParameter(musicEventInstance, "Boss_State", value);
         }
 
