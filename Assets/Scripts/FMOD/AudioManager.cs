@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
     private void InitializeMusic(EventReference musicRef)
         {
             musicEventInstance = CreateEventInstance(musicRef);
+            musicEventInstance.setVolume(0.2f); // 20% volume
             musicEventInstance.start();
         }
 
